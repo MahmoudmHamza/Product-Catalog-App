@@ -109,12 +109,12 @@ namespace ProductsCatalogApp.Controllers
             }
         }
 
-        [HttpGet("users/{userId}/recommendations")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetRecommendationsForUser(int userId)
+        [HttpGet("{id}/recommendations")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetRecommendationsForUser(int id)
         {
             try
             {
-                var recommendedProducts = await _userService.GetRecommendedProducts(userId);
+                var recommendedProducts = await _userService.GetRecommendedProducts(id);
                 if (recommendedProducts == null || recommendedProducts.Count == 0)
                 {
                     return NotFound();

@@ -44,7 +44,7 @@ namespace ProductsCatalogApp.Repositories
             await _context.SaveChangesAsync();
         }
         
-        public async Task<IEnumerable<Product>> SearchProducts(string query)
+        public async Task<List<Product>> SearchProducts(string query)
         {
             var products = await _context.Products
                 .Where(p => p.Name.Contains(query) || p.Category.Name.Contains(query))

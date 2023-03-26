@@ -13,6 +13,6 @@ namespace ProductsCatalogApp.Services
         Task<bool> DeleteAsync(int id);
         Task<List<Product>> GetAllProductsByCategoryId(int categoryId);
         Task<Product> AddProductNewRating(Product product, ProductRating rating);
-        Task<IEnumerable<Product>> SearchProductsByName(string query);
+        Task<List<Product>> SearchProductsByName(string query);
     }
 }

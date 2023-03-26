@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Job Applications\\B_Labs\\ProductCatalogApp-main\\ProductsCatalogApp\\ProductsCatalogApp.csproj": {}
+    "D:\\Job Applications\\B_Labs\\Product-Catalog-App\\ProductsCatalogApp\\ProductsCatalogApp.csproj": {}
   },
   "projects": {
-    "D:\\Job Applications\\B_Labs\\ProductCatalogApp-main\\ProductsCatalogApp\\ProductsCatalogApp.csproj": {
+    "D:\\Job Applications\\B_Labs\\Product-Catalog-App\\ProductsCatalogApp\\ProductsCatalogApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Job Applications\\B_Labs\\ProductCatalogApp-main\\ProductsCatalogApp\\ProductsCatalogApp.csproj",
+        "projectUniqueName": "D:\\Job Applications\\B_Labs\\Product-Catalog-App\\ProductsCatalogApp\\ProductsCatalogApp.csproj",
         "projectName": "ProductsCatalogApp",
-        "projectPath": "D:\\Job Applications\\B_Labs\\ProductCatalogApp-main\\ProductsCatalogApp\\ProductsCatalogApp.csproj",
+        "projectPath": "D:\\Job Applications\\B_Labs\\Product-Catalog-App\\ProductsCatalogApp\\ProductsCatalogApp.csproj",
         "packagesPath": "C:\\Users\\mahmo\\.nuget\\packages\\",
-        "outputPath": "D:\\Job Applications\\B_Labs\\ProductCatalogApp-main\\ProductsCatalogApp\\obj\\",
+        "outputPath": "D:\\Job Applications\\B_Labs\\Product-Catalog-App\\ProductsCatalogApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\mahmo\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -38,13 +38,29 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.17, )"
             },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[5.0.10, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [

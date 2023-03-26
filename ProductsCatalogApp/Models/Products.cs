@@ -15,11 +15,5 @@ namespace ProductsCatalogApp.Models
         public List<OrderItem> OrderItems { get; set; }
         public List<ProductRating> Ratings { get; set; }
         public decimal Rating { get; set; }
-        
-        
-        // public DateTime CreatedAt { get; set; }
-        // public DateTime UpdatedAt { get; set; }
-        // public List<ProductCategory> ProductCategories { get; set; }
-        // public List<Image> Images { get; set; }
     }
 }

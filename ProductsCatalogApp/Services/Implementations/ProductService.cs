@@ -51,7 +51,7 @@ namespace ProductsCatalogApp.Services
             return await _repository.AddProductRating(product, rating);
         }
 
-        public async Task<IEnumerable<Product>> SearchProductsByName(string query)
+        public async Task<List<Product>> SearchProductsByName(string query)
         {
             return await _repository.SearchProducts(query);
         }

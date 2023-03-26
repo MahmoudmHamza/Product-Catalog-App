@@ -22,24 +22,5 @@ namespace ProductsCatalogApp.Repositories
                 .SelectMany(o => o.OrderItems)
                 .ToListAsync();
         }
-        
-        // public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(int userId)
-        // {
-        //     return await _context.Orders
-        //         .Where(o => o.UserId == userId)
-        //         .ToListAsync();
-        // }
-        //
-        // public Task<IEnumerable<Product>> GetRecommendedProductsAsync(int userId)
-        // {
-        //     throw new System.NotImplementedException();
-        // }
-        //
-        // public async Task<IEnumerable<Order>> GetUserOrderHistoryAsync(int userId)
-        // {
-        //     return await _context.Orders.Include(o => o.OrderItems)
-        //         .ThenInclude(od => od.Product)
-        //         .Where(o => o.UserId == (int)userId).ToListAsync();
-        // }
     }
 }

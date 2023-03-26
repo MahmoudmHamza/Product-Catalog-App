@@ -8,7 +8,7 @@ namespace ProductsCatalogApp.Repositories
     {
         Task<List<Product>> GetProductsByCategoryId(int categoryId);
         Task<Product> AddProductRating(Product product, ProductRating rating);
-        Task<IEnumerable<Product>> SearchProducts(string query);
+        Task<List<Product>> SearchProducts(string query);
         Task<IEnumerable<Product>> GetProductsByCategoryIdsAsync(List<int> categoryIds);
     }
 }

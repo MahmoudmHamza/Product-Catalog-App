@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProductsCatalogApp.Models;
 using ProductsCatalogApp.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ProductsCatalogApp.Controllers
 {
@@ -12,15 +13,20 @@ namespace ProductsCatalogApp.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IOrderService _orderService;
 
-        public ProductController(IProductService productService, IOrderService orderService)
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _orderService = orderService;
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get all products",
+            Description = "Returns all products."
+        )]
         public async Task<IActionResult> GetProducts()
         {
             try
@@ -40,6 +46,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get a product by ID",
+            Description = "Returns a single product with the specified ID."
+        )]
         public async Task<IActionResult> GetProduct([FromRoute] int id)
         {
             try
@@ -59,6 +72,12 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPost]
+        [ProducesResponseType(typeof(Product), 201)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Create new product",
+            Description = "Creates new single product with the given parameters in the request body."
+        )]
         public async Task<IActionResult> CreateProduct([FromBody] Product product)
         {
             try
@@ -74,6 +93,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Update a product by ID",
+            Description = "Updates a single product with the specified ID."
+        )]
         public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] Product product)
         {
             try
@@ -93,6 +119,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Delete a product by ID",
+            Description = "Delete a single product with the specified ID."
+        )]
         public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
             try
@@ -112,6 +145,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpGet("category/{categoryId}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get all products by category ID",
+            Description = "Gets all products with the specified category ID."
+        )]
         public async Task<ActionResult<IEnumerable<Product>>> GetProductsByCategoryId(int categoryId)
         {
             try
@@ -132,6 +172,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPost("{id}/ratings")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Add product rating",
+            Description = "Adds rating for a product with the specified ID."
+        )]
         public async Task<ActionResult<Product>> AddProductRating([FromRoute] int id, [FromBody] ProductRating rating)
         {
             try
@@ -152,6 +199,13 @@ namespace ProductsCatalogApp.Controllers
         }
 
         [HttpGet("{id}/ratings/average")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get product rating by ID",
+            Description = "Get single product rating with the specified ID."
+        )]
         public async Task<ActionResult<decimal>> GetProductAverageRating([FromRoute] int id)
         {
             try
@@ -171,11 +225,23 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpGet("search")]
-        public ActionResult<IEnumerable<Product>> SearchProducts(string query)
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Search products by name",
+            Description = "Gets all products with the given search name."
+        )]
+        public async Task<ActionResult<IEnumerable<Product>>> SearchProducts(string query)
         {
             try
             {
-                var products = _productService.SearchProductsByName(query);
+                var products = await _productService.SearchProductsByName(query);
+                if (products == null || products.Count == 0) 
+                {
+                    return NotFound();
+                }
+                
                 return Ok(products);
             }
             catch (Exception ex)
@@ -183,16 +249,5 @@ namespace ProductsCatalogApp.Controllers
                 return BadRequest(ex);
             }
         }
-        
-        // [HttpGet("{productId}/recommendations")]
-        // public ActionResult<IEnumerable<Product>> GetRecommendations(int productId)
-        // {
-        //     var orderItems = _orderRepository.GetOrderItemsByProduct(productId);
-        //     var userIds = orderItems.Select(oi => oi.UserId).Distinct();
-        //     
-        //     var recommendedProducts = _productRepository.GetProductsByUserIds(userIds);
-        //     
-        //     return Ok(recommendedProducts);
-        // }
     }
 }
