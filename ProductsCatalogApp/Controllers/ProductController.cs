@@ -76,7 +76,7 @@ namespace ProductsCatalogApp.Controllers
         [ProducesResponseType(400)]
         [SwaggerOperation(
             Summary = "Create new product",
-            Description = "Creates new single product with the given parameters in the request body."
+            Description = "Creates new product with the given parameters in the request body."
         )]
         public async Task<IActionResult> CreateProduct([FromBody] Product product)
         {

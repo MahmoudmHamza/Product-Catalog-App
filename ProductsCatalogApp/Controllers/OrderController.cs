@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProductsCatalogApp.Models;
 using ProductsCatalogApp.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ProductsCatalogApp.Controllers
 {
@@ -18,6 +19,13 @@ namespace ProductsCatalogApp.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get all orders",
+            Description = "Returns all orders."
+        )]
         public async Task<IActionResult> GetOrders()
         {
             try
@@ -37,6 +45,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get an order by ID",
+            Description = "Returns a single order with the specified ID."
+        )]
         public async Task<IActionResult> GetOrder([FromRoute] int id)
         {
             try
@@ -56,6 +71,12 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPost]
+        [ProducesResponseType(typeof(Product), 201)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Create new order",
+            Description = "Creates new order with the given parameters in the request body."
+        )]
         public async Task<IActionResult> CreateOrder([FromBody] Order order)
         {
             try
@@ -71,6 +92,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Update an order by ID",
+            Description = "Updates a single order with the specified ID."
+        )]
         public async Task<IActionResult> UpdateOrder([FromRoute] int id, [FromBody] Order order)
         {
             try
@@ -90,6 +118,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Delete an order by ID",
+            Description = "Delete a single order with the specified ID."
+        )]
         public async Task<IActionResult> DeleteOrder([FromRoute] int id)
         {
             try

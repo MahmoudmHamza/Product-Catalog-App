@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProductsCatalogApp.Models;
 using ProductsCatalogApp.Services;
-using System.Linq;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ProductsCatalogApp.Controllers
 {
@@ -20,6 +20,13 @@ namespace ProductsCatalogApp.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get all users",
+            Description = "Returns all users."
+        )]
         public async Task<IActionResult> GetUsers()
         {
             try
@@ -39,6 +46,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get a user by ID",
+            Description = "Returns a single user with the specified ID."
+        )]
         public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             try
@@ -58,6 +72,12 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPost]
+        [ProducesResponseType(typeof(Product), 201)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Create new user",
+            Description = "Creates new user with the given parameters in the request body."
+        )]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
             try
@@ -72,6 +92,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Update a product by ID",
+            Description = "Updates a single product with the specified ID."
+        )]
         public async Task<IActionResult> UpdateUser([FromRoute] int id, [FromBody] User user)
         {
             try
@@ -91,6 +118,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Delete a user by ID",
+            Description = "Delete a single user with the specified ID."
+        )]
         public async Task<IActionResult> DeleteProduct([FromRoute] int id)
         {
             try
@@ -110,6 +144,13 @@ namespace ProductsCatalogApp.Controllers
         }
 
         [HttpGet("{id}/recommendations")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get user recommended products by ID",
+            Description = "Returns user's top 10 product recommendations based on his history and purchased items with the specified ID."
+        )]
         public async Task<ActionResult<IEnumerable<Product>>> GetRecommendationsForUser(int id)
         {
             try
@@ -117,7 +158,7 @@ namespace ProductsCatalogApp.Controllers
                 var recommendedProducts = await _userService.GetRecommendedProducts(id);
                 if (recommendedProducts == null || recommendedProducts.Count == 0)
                 {
-                    return NotFound();
+                    return NoContent();
                 }
 
                 return Ok(recommendedProducts);

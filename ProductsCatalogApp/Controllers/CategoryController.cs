@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProductsCatalogApp.Models;
 using ProductsCatalogApp.Services;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ProductsCatalogApp.Controllers
 {
@@ -18,6 +19,13 @@ namespace ProductsCatalogApp.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get all categories",
+            Description = "Returns all categories."
+        )]
         public async Task<IActionResult> GetCategories()
         {
             try
@@ -37,6 +45,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Get a category by ID",
+            Description = "Returns a single category with the specified ID."
+        )]
         public async Task<IActionResult> GetCategory([FromRoute] int id)
         {
             try
@@ -56,7 +71,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody] Category category)
+        [ProducesResponseType(typeof(Product), 201)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Create new category",
+            Description = "Creates new category with the given parameters in the request body."
+        )]
+        public async Task<IActionResult> CreateCategory([FromBody] Category category)
         {
             try
             {
@@ -70,6 +91,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpPut("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Update a category by ID",
+            Description = "Updates a single category with the specified ID."
+        )]
         public async Task<IActionResult> UpdateCategory([FromRoute] int id, [FromBody] Category category)
         {
             try
@@ -89,6 +117,13 @@ namespace ProductsCatalogApp.Controllers
         }
         
         [HttpDelete("{id}")]
+        [ProducesResponseType(typeof(Product), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(400)]
+        [SwaggerOperation(
+            Summary = "Delete a category by ID",
+            Description = "Delete a single category with the specified ID."
+        )]
         public async Task<IActionResult> DeleteCategory([FromRoute] int id)
         {
             try
