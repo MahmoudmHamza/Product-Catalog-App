@@ -4,46 +4,46 @@ This is a RESTful API built using .NET Core and Entity Framework that allows you
 Features
 Products
 
--Create a new product
--Retrieve a list of all products
--Retrieve a single product by ID
--Update a product
--Delete a product
+- Create a new product
+- Retrieve a list of all products
+- Retrieve a single product by ID
+- Update a product
+- Delete a product
 
 Categories
 
--Create a new category
--Retrieve a list of all categories
--Retrieve a single category by ID
--Update a category
--Delete a category
+- Create a new category
+- Retrieve a list of all categories
+- Retrieve a single category by ID
+- Update a category
+- Delete a category
 
 Orders
 
--Create a new order
--Retrieve a list of all orders
--Retrieve a single order by ID
--Update an order
--Delete an order
+- Create a new order
+- Retrieve a list of all orders
+- Retrieve a single order by ID
+- Update an order
+- Delete an order
 
 Product Ratings
 
--Add a new rating for a product
--Retrieve the average rating for a product
+- Add a new rating for a product
+- Retrieve the average rating for a product
 
 Product Search
 
--Search for product by name or category
+- Search for product by name or category
 
 Product Recommendation
 
--Retrieve recommended products for user based on history and purchased items
+- Retrieve recommended products for user based on history and purchased items
 
 Getting Started
 
--Clone this repository: git clone https://github.com/your-username/product-catalog-api.git
--Open the project in Visual Studio or your preferred IDE
--Run the application
+- Clone this repository: git clone https://github.com/your-username/product-catalog-api.git
+- Open the project in Visual Studio or your preferred IDE
+- Run the application
 
 ## API Endpoints
 ### Products
@@ -149,6 +149,6 @@ Returns all products by name.
 ### Product Recommendation
 Get product recommendations based on user history and purchased items by user id
 
-    GET /user/{id}/recommendation
+    GET /user/{id}/recommendations
 
 Returns product recommendations by user id.
