@@ -115,10 +115,26 @@ namespace ProductsCatalogApp.Repositories
         {
             try
             {
-                product.Ratings.Add(rating);
+                var productResult = await _context.Products
+                    .Include(p => p.Ratings)
+                    .FirstOrDefaultAsync(p => p.Id == product.Id);
+
+                if (productResult == null)
+                {
+                    throw new ArgumentException($"Product with ID {product.Id} does not exist");
+                }
+
+                var newProductRating = new ProductRating
+                {
+                    ProductId = rating.ProductId,
+                    UserId = rating.UserId,
+                    Rating = rating.Rating
+                };
+                
+                productResult.Ratings.Add(newProductRating);
                 await _context.SaveChangesAsync();
 
-                UpdateProductAverageRating(product);
+                UpdateProductAverageRating(productResult);
 
                 return product;
             }
@@ -133,7 +149,7 @@ namespace ProductsCatalogApp.Repositories
         {
             try
             {
-                if (product.Ratings.Count == 0)
+                if (product.Ratings.Count == 0 || product.Ratings == null)
                 {
                     product.Rating = 0;
                 }

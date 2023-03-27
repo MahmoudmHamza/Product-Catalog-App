@@ -138,13 +138,13 @@ namespace ProductsCatalogApp.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
                     b.Property<int>("Rating")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -221,11 +221,15 @@ namespace ProductsCatalogApp.Migrations
                 {
                     b.HasOne("ProductsCatalogApp.Models.Product", "Product")
                         .WithMany("Ratings")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProductsCatalogApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
+                        .WithMany("Ratings")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
 
@@ -254,6 +258,8 @@ namespace ProductsCatalogApp.Migrations
             modelBuilder.Entity("ProductsCatalogApp.Models.User", b =>
                 {
                     b.Navigation("Orders");
+
+                    b.Navigation("Ratings");
                 });
 #pragma warning restore 612, 618
         }
