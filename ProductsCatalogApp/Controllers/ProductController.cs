@@ -206,7 +206,7 @@ namespace ProductsCatalogApp.Controllers
             Summary = "Get product rating by ID",
             Description = "Get single product rating with the specified ID."
         )]
-        public async Task<ActionResult<decimal>> GetProductAverageRating([FromRoute] int id)
+        public async Task<ActionResult<Product>> GetProductAverageRating([FromRoute] int id)
         {
             try
             {
@@ -216,7 +216,7 @@ namespace ProductsCatalogApp.Controllers
                     return NotFound();
                 }
 
-                return Ok(product.Rating);
+                return Ok(product);
             }
             catch (Exception ex)
             {

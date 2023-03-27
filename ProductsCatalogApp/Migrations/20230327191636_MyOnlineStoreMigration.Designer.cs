@@ -10,7 +10,7 @@ using ProductsCatalogApp.Repositories;
 namespace ProductsCatalogApp.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20230327142241_MyOnlineStoreMigration")]
+    [Migration("20230327191636_MyOnlineStoreMigration")]
     partial class MyOnlineStoreMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -91,9 +91,6 @@ namespace ProductsCatalogApp.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("CategoryId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
@@ -111,8 +108,6 @@ namespace ProductsCatalogApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Products");
                 });
 
@@ -123,10 +118,10 @@ namespace ProductsCatalogApp.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -205,24 +200,19 @@ namespace ProductsCatalogApp.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("ProductsCatalogApp.Models.Product", b =>
-                {
-                    b.HasOne("ProductsCatalogApp.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId");
-
-                    b.Navigation("Category");
-                });
-
             modelBuilder.Entity("ProductsCatalogApp.Models.ProductCategory", b =>
                 {
                     b.HasOne("ProductsCatalogApp.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .WithMany("ProductCategory")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ProductsCatalogApp.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId");
+                        .WithMany("ProductCategory")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
@@ -246,7 +236,7 @@ namespace ProductsCatalogApp.Migrations
 
             modelBuilder.Entity("ProductsCatalogApp.Models.Category", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("ProductCategory");
                 });
 
             modelBuilder.Entity("ProductsCatalogApp.Models.Order", b =>
@@ -257,6 +247,8 @@ namespace ProductsCatalogApp.Migrations
             modelBuilder.Entity("ProductsCatalogApp.Models.Product", b =>
                 {
                     b.Navigation("OrderItems");
+
+                    b.Navigation("ProductCategory");
 
                     b.Navigation("Ratings");
                 });

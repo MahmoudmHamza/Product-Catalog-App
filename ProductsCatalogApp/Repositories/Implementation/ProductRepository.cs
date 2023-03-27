@@ -100,7 +100,8 @@ namespace ProductsCatalogApp.Repositories
             try
             {
                 var product = await _context.Set<Product>()
-                    .Where(p => p.Category.Id == categoryId).ToListAsync();
+                    .Where(p => p.ProductCategory
+                        .Any(pc => pc.CategoryId == categoryId)).ToListAsync();
                 return product;
             }
             catch (Exception ex)
@@ -114,7 +115,7 @@ namespace ProductsCatalogApp.Repositories
         {
             try
             {
-                product.Ratings?.Add(rating);
+                product.Ratings.Add(rating);
                 await _context.SaveChangesAsync();
 
                 UpdateProductAverageRating(product);
@@ -132,7 +133,7 @@ namespace ProductsCatalogApp.Repositories
         {
             try
             {
-                if (product.Ratings?.Count == 0)
+                if (product.Ratings.Count == 0)
                 {
                     product.Rating = 0;
                 }
@@ -154,11 +155,18 @@ namespace ProductsCatalogApp.Repositories
         {
             try
             {
-                var products = await _context.Products
-                    .Where(p => p.Name.Contains(query) || p.Category.Name.Contains(query))
-                    .ToListAsync();
+                var products = _context.Products
+                    .Include(p => p.ProductCategory)
+                    .ThenInclude(pc => pc.Category)
+                    .AsQueryable();
 
-                return products;
+                if (!string.IsNullOrEmpty(query))
+                {
+                    products = products.Where(p => p.Name.Contains(query) || 
+                                                   p.ProductCategory.Any(pc => pc.Category.Name.Contains(query)));
+                }
+
+                return await products.ToListAsync();
             }
             catch (Exception ex)
             {
@@ -172,7 +180,7 @@ namespace ProductsCatalogApp.Repositories
             try
             {
                 return await _context.Products
-                    .Where(p => categoryIds.Contains(p.Category.Id))
+                    .Where(p => p.ProductCategory.Any(pc => categoryIds.Contains(pc.CategoryId)))
                     .ToListAsync();
             }
             catch (Exception ex)
