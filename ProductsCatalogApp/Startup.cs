@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using Npgsql;
 using ProductsCatalogApp.Repositories;
 using Newtonsoft.Json;
+using ProductsCatalogApp.Services;
 
 namespace ProductsCatalogApp
 {
@@ -37,9 +38,14 @@ namespace ProductsCatalogApp
             });
             
             // Services configuration
-            services.AddScoped(typeof(IPostgresRepository<>), typeof(PostgresRepository<>));
-            services.AddScoped<IProductRepository, ProductRepository>()
-                .AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped(typeof(IPostgresRepository<>), typeof(PostgresRepository<>))
+                .AddScoped<UserRepository>()
+                .AddScoped<ProductRepository>()
+                .AddScoped<OrderRepository>()
+                .AddScoped<IProductService, ProductService>()
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<ICategoryService, CategoryService>()
+                .AddScoped<IOrderService, OrderService>();
 
             // Database configuration
             var builder = new NpgsqlConnectionStringBuilder()
@@ -71,7 +77,7 @@ namespace ProductsCatalogApp
 
             try
             {
-                Console.WriteLine("Migration Started");
+                Console.WriteLine("Migration Started...");
                 using (var service = app.ApplicationServices.GetService<IServiceScopeFactory>()?.CreateScope())
                 {
                     if (service != null)

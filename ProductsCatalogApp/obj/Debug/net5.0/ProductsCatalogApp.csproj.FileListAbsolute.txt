@@ -113,3 +113,14 @@ D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5
 D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\obj\Debug\net5.0\ProductsCatalogApp.MvcApplicationPartsAssemblyInfo.cs
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Castle.Core.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Moq.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\nunit.framework.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\DependencyInjection.Analyzer.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Microsoft.CodeAnalysis.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Microsoft.DotNet.PlatformAbstractions.dll
+D:\Job Applications\B_Labs\Product-Catalog-App\ProductsCatalogApp\bin\Debug\net5.0\Microsoft.Extensions.DependencyModel.dll
