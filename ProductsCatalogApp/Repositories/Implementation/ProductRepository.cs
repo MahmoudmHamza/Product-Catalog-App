@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ProductsCatalogApp.Models;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,47 +18,89 @@ namespace ProductsCatalogApp.Repositories
 
         public async Task<List<Product>> GetProductsByCategoryId(int categoryId)
         {
-            return await _context.Set<Product>().Where(p => p.Category.Id == categoryId).ToListAsync();
+            try
+            {
+                var product = await _context.Set<Product>()
+                    .Where(p => p.Category.Id == categoryId).ToListAsync();
+                return product;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't retrieve all products by the category id {categoryId}" +
+                                    $"\nErrorDetails: {ex.Message}");
+            }
         }
 
         public async Task<Product> AddProductRating(Product product, ProductRating rating)
         {
-            product.Ratings.Add(rating);
-            await _context.SaveChangesAsync();
+            try
+            {
+                product.Ratings?.Add(rating);
+                await _context.SaveChangesAsync();
 
-            UpdateProductAverageRating(product);
+                UpdateProductAverageRating(product);
 
-            return product;
+                return product;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't add rating for the given product" +
+                                    $"\nErrorDetails: {ex.Message}");
+            }
         }
 
         private async void UpdateProductAverageRating(Product product)
         {
-            if (product.Ratings.Count == 0)
+            try
             {
-                product.Rating = 0;
-            }
-            else
-            {
-                product.Rating = (decimal)product.Ratings.Average(r => r.Rating);
-            }
+                if (product.Ratings?.Count == 0)
+                {
+                    product.Rating = 0;
+                }
+                else
+                {
+                    product.Rating = (decimal)product.Ratings.Average(r => r.Rating);
+                }
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't update average rating for the product with the id {product.Id}" +
+                                    $"\nErrorDetails: {ex.Message}");
+            }
         }
         
         public async Task<List<Product>> SearchProducts(string query)
         {
-            var products = await _context.Products
-                .Where(p => p.Name.Contains(query) || p.Category.Name.Contains(query))
-                .ToListAsync();
+            try
+            {
+                var products = await _context.Products
+                    .Where(p => p.Name.Contains(query) || p.Category.Name.Contains(query))
+                    .ToListAsync();
 
-            return products;
+                return products;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't retrieve results for the given search query" +
+                                    $"\nErrorDetails: {ex.Message}");
+            }
         }
 
         public async Task<IEnumerable<Product>> GetProductsByCategoryIdsAsync(List<int> categoryIds)
         {
-            return await _context.Products
-                .Where(p => categoryIds.Contains(p.CategoryId))
-                .ToListAsync();
+            try
+            {
+                return await _context.Products
+                    .Where(p => categoryIds.Contains(p.Category.Id))
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't retrieve all products by category ids for the given search query" +
+                                    $"\nErrorDetails: {ex.Message}");
+            }
         }
     }
 }

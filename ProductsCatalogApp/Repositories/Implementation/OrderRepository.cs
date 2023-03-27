@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ProductsCatalogApp.Models;
 using System.Linq;
@@ -17,10 +18,18 @@ namespace ProductsCatalogApp.Repositories
 
         public async Task<IEnumerable<OrderItem>> GetOrderItemsByUserIdAsync(int userId)
         {
-            return await _context.Orders
-                .Where(o => o.UserId == userId)
-                .SelectMany(o => o.OrderItems)
-                .ToListAsync();
+            try
+            {
+                return await _context.Orders
+                    .Where(o => o.User.Id == userId)
+                    .SelectMany(o => o.OrderItems)
+                    .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't retrieve all orders for user with id: {userId}" +
+                                    $"\nErrorDetails: {ex.Message}");
+            }
         }
     }
 }

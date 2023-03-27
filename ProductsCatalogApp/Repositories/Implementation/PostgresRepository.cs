@@ -48,6 +48,7 @@ namespace ProductsCatalogApp.Repositories
             try
             {
                 await _context.Set<T>().AddAsync(entity);
+                await _context.SaveChangesAsync();
                 return entity;
             }
             catch (Exception ex)
