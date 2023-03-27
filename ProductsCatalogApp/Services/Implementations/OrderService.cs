@@ -8,9 +8,9 @@ namespace ProductsCatalogApp.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly OrderRepository _repository;
+        private readonly IOrderRepository _repository;
 
-        public OrderService(OrderRepository repository)
+        public OrderService(IOrderRepository repository)
         {
             _repository = repository;
         }

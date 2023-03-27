@@ -4,7 +4,7 @@ using ProductsCatalogApp.Models;
 
 namespace ProductsCatalogApp.Repositories
 {
-    public interface IProductRepository
+    public interface IProductRepository : IPostgresRepository<Product>
     {
         Task<List<Product>> GetProductsByCategoryId(int categoryId);
         Task<Product> AddProductRating(Product product, ProductRating rating);

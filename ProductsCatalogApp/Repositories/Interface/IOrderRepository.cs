@@ -4,7 +4,7 @@ using ProductsCatalogApp.Models;
 
 namespace ProductsCatalogApp.Repositories
 {
-    public interface IOrderRepository
+    public interface IOrderRepository : IPostgresRepository<Order>
     {
         Task<IEnumerable<OrderItem>> GetOrderItemsByUserIdAsync(int userId);
     }

@@ -7,13 +7,92 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ProductsCatalogApp.Repositories
 {
-    public class ProductRepository : PostgresRepository<Product>, IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly CatalogDbContext _context;
 
         public ProductRepository(CatalogDbContext context)
         {
             _context = context;
+        }
+        
+        public async Task<IEnumerable<Product>> GetAll()
+        {
+            try
+            {
+                return await _context.Set<Product>().ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't retrieve all data for entity {typeof(Product)} " +
+                                    $"\nErrorDetails: {ex.Message}");
+            }
+        }
+
+        public async Task<Product> Get(int id)
+        {
+            try
+            {
+                return await _context.Set<Product>().FindAsync(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't retrieve data with id: {id} for entity {typeof(Product)} \n ErrorDetails: {ex.Message}");
+            }
+        }
+
+        public async Task<Product> Add(Product entity)
+        {
+            try
+            {
+                await _context.Set<Product>().AddAsync(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't create new entry for entity {typeof(Product)} \n ErrorDetails: {ex.Message}");
+            }
+        }
+
+        public async Task<Product> Update(int id, Product entity)
+        {
+            try
+            {
+                var fetchedEntity = await _context.Set<Product>().FindAsync(id);
+                if (fetchedEntity == null)
+                {
+                    return null;
+                }
+                
+                _context.Set<Product>().Update(entity);
+                await _context.SaveChangesAsync();
+                return entity;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't update entry for entity {typeof(Product)} \n ErrorDetails: {ex.Message}");
+            }
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            try
+            {
+                var entity = await _context.Set<Product>().FindAsync(id);
+                if (entity == null)
+                {
+                    return false;
+                }
+                
+                _context.Set<Product>().Remove(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Database error: Couldn't delete entry for entity {typeof(Product)} \n ErrorDetails: {ex.Message}");
+            }
         }
 
         public async Task<List<Product>> GetProductsByCategoryId(int categoryId)

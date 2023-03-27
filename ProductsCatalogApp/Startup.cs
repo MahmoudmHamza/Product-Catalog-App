@@ -39,9 +39,9 @@ namespace ProductsCatalogApp
             
             // Services configuration
             services.AddScoped(typeof(IPostgresRepository<>), typeof(PostgresRepository<>))
-                .AddScoped<UserRepository>()
-                .AddScoped<ProductRepository>()
-                .AddScoped<OrderRepository>()
+                .AddScoped<IUserRepository, UserRepository>()
+                .AddScoped<IProductRepository, ProductRepository>()
+                .AddScoped<IOrderRepository, OrderRepository>()
                 .AddScoped<IProductService, ProductService>()
                 .AddScoped<IUserService, UserService>()
                 .AddScoped<ICategoryService, CategoryService>()

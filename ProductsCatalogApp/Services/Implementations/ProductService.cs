@@ -8,9 +8,9 @@ namespace ProductsCatalogApp.Services
 {
     public class ProductService : IProductService
     {
-        private readonly ProductRepository _repository;
+        private readonly IProductRepository _repository;
 
-        public ProductService(ProductRepository repository)
+        public ProductService(IProductRepository repository)
         {
             _repository = repository;
         }

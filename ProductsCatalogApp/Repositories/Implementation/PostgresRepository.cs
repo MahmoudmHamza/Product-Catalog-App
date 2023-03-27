@@ -14,11 +14,6 @@ namespace ProductsCatalogApp.Repositories
             _context = context;
         }
 
-        public PostgresRepository()
-        {
-            
-        }
-
         public async Task<IEnumerable<T>> GetAll()
         {
             try

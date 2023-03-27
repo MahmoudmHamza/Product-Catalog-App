@@ -4,7 +4,7 @@ using ProductsCatalogApp.Models;
 
 namespace ProductsCatalogApp.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IPostgresRepository<User> 
     {
         Task<List<Product>> GetRecommendedProductsAsync(int id);
     }
